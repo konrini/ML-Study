@@ -7,11 +7,9 @@ fourcc = cv2.VideoWriter_fourcc(*'XVID')
 fps = 1.0
 frame_size = (512, 512)
 
-
 out = cv2.VideoWriter(filepath, fourcc, fps, frame_size)
 
 for i in range(5, 0, -1):
-    
     # 빈 화면 설정
     img = np.zeros(shape=(512, 512, 3), dtype=np.uint8)+(50*i)
     
@@ -43,18 +41,18 @@ for i in range(5, 0, -1):
         cv2.circle(img, (256, 256), 215, (155, 255, 0))
     elif i == 1:
         cv2.drawMarker(img, (256, 275), (255, 255, 255), cv2.MARKER_TRIANGLE_DOWN, 400, 3)
-
-    cv2.putText(img, text, org, fontFace[i-1], fontScale, color=[5*i,15*i,255], thickness=5)
-        
-    out.write(img)
     
-    if not retval:
-        break
+    # 숫자 적기
+    cv2.putText(img, text, org, fontFace[i-1], fontScale, color=[5*i,15*i,255], thickness=5)
+    
+    # 비디오 저장    
+    out.write(img)
 
 out.release()
 cv2.destroyAllWindows()
 
 
+# 비디오 영상 재생
 cap = cv2.VideoCapture('./out/countdown.mp4')
 while True:
     retval, frame = cap.read()
