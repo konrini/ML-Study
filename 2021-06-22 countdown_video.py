@@ -10,8 +10,9 @@ frame_size = (512, 512)
 out = cv2.VideoWriter(filepath, fourcc, fps, frame_size)
 
 for i in range(5, 0, -1):
+    
     # 빈 화면 설정
-    img = np.zeros(shape=(512, 512, 3), dtype=np.uint8)+(50*i)
+    img = np.zeros(shape=(512, 512, 3), dtype=np.uint8)+50*i
     
     # 텍스트 내용
     text = str(i)
@@ -36,23 +37,27 @@ for i in range(5, 0, -1):
     elif i == 4:
         cv2.drawMarker(img, (256, 256), (0, 0, 255), cv2.MARKER_DIAMOND, 450, 3)
     elif i == 3:
-        cv2.rectangle(img, [50,50], [450,450], color=[0,0,255],thickness=2)
+        cv2.rectangle(img, (50,50), (450,450), (0,0,255), 2)
     elif i == 2:
         cv2.circle(img, (256, 256), 215, (155, 255, 0))
     elif i == 1:
         cv2.drawMarker(img, (256, 275), (255, 255, 255), cv2.MARKER_TRIANGLE_DOWN, 400, 3)
     
-    # 숫자 적기
-    cv2.putText(img, text, org, fontFace[i-1], fontScale, color=[5*i,15*i,255], thickness=5)
+    # 텍스트 작성
+    cv2.putText(img, text, org, fontFace[i-1], fontScale, color=[5*i,15*i,255-50*i], thickness=5)
+    
+    # 좌우 반전
+    if i % 2 == 0:
+        img = ~img
     
     # 비디오 저장    
     out.write(img)
-
+    
 out.release()
 cv2.destroyAllWindows()
 
 
-# 비디오 영상 재생
+# 비디오 영상 실행
 cap = cv2.VideoCapture('./out/countdown.mp4')
 while True:
     retval, frame = cap.read()
@@ -65,4 +70,3 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
-
