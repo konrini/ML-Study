@@ -1,2 +1,2 @@
 # ML-Study
-ML-Study
+Machine Learning Study
